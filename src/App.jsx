@@ -1,5 +1,6 @@
 import { Calendar, Layout, Badge } from "antd";
 import { useState, useEffect } from "react";
+import { BellOutlined, SettingOutlined } from "@ant-design/icons";
 
 const { Header, Sider, Content } = Layout;
 
@@ -55,14 +56,23 @@ const App = () => {
     <Layout style={wrapperStyle}>
       <Header
         style={{
-          fontSize: "2rem",
-          background: "#001529",
+          fontSize: "1.5rem",
+          background: "linear-gradient(45deg, #001529, #1890ff)",
           color: "#fff",
           paddingLeft: "2rem",
           margin: "0",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
         }}
       >
-        <h1 style={{ margin: 0, color: "#fff" }}>AntDesign Calendar</h1>
+        <h1 style={{ margin: "0" }}>AntDesign Calendar</h1>
+        <div>
+          <BellOutlined
+            style={{ fontSize: "1.5rem", color: "#fff", margin: "0 10px" }}
+          />
+          <SettingOutlined style={{ fontSize: "1.5rem", color: "#fff" }} />
+        </div>
       </Header>
 
       <Layout>
