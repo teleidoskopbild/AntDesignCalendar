@@ -1,11 +1,24 @@
 import { Calendar, Layout, Badge } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const { Header, Sider, Content } = Layout;
 
 const App = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [notes, setNotes] = useState({});
+
+  // Laden der Notizen aus dem Local Storage
+  useEffect(() => {
+    const storedNotes = JSON.parse(localStorage.getItem("notes")) || {};
+    setNotes(storedNotes);
+  }, []); // lädt nur einmal beim Mount
+
+  // Speichern der Notizen im Local Storage
+  useEffect(() => {
+    if (Object.keys(notes).length > 0) {
+      localStorage.setItem("notes", JSON.stringify(notes));
+    }
+  }, [notes]); // immer wenn notes sich ändert
 
   const wrapperStyle = {
     width: "100%",
