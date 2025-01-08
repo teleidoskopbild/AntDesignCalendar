@@ -3,3 +3,9 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.ant-picker-body th {
+  font-size: 1.25rem; /* Größere Schriftgröße */
+  font-weight: bold; /* Fettgedruckt */
+  color: #1a7edb !important; /* Ändert die Schriftfarbe */
+}
