@@ -33,22 +33,55 @@ const App = () => {
   };
 
   const handleContentChange = (e) => {
-    const updatedNotes = { ...notes, [selectedDate]: e.target.value };
+    const updatedNotes = {
+      ...notes,
+      [selectedDate]: {
+        text: e.target.value,
+        priority: notes[selectedDate]?.priority || "none",
+      },
+    };
     setNotes(updatedNotes);
+  };
+
+  const handlePriorityChange = (e) => {
+    const updatedNotes = { ...notes };
+    const date = selectedDate;
+    updatedNotes[date] = { ...updatedNotes[date], priority: e.target.value };
+    setNotes(updatedNotes);
+  };
+
+  const getPriorityColor = (priority) => {
+    switch (priority) {
+      case "high":
+        return "#ff4d4f";
+      case "medium":
+        return "#faad14";
+      case "low":
+        return "#52c41a";
+      default:
+        return "#1a7edb";
+    }
   };
 
   const cellRender = (current, info) => {
     const date = current.format("YYYY-MM-DD");
     const hasNotes = notes[date];
+
     if (info.type === "date") {
-      return (
-        <div className="notes-cell">
-          {hasNotes && (
-            <Badge count="📝" style={{ backgroundColor: "#52c41c" }} />
-          )}
-        </div>
-      );
+      if (hasNotes && hasNotes.text) {
+        return (
+          <div className="notes-cell">
+            <Badge
+              count="📝"
+              style={{ backgroundColor: getPriorityColor(hasNotes.priority) }}
+            />
+          </div>
+        );
+      }
+
+      return null;
     }
+
     return info.originNode;
   };
 
@@ -79,7 +112,7 @@ const App = () => {
         <Sider width={300} style={{ background: "#fff", padding: "20px" }}>
           <h2>Details for {selectedDate}</h2>
           <textarea
-            value={notes[selectedDate] || ""}
+            value={notes[selectedDate]?.text || ""}
             onChange={handleContentChange}
             placeholder="Enter your notes..."
             style={{
@@ -90,6 +123,15 @@ const App = () => {
               borderRadius: "4px",
             }}
           />
+          <select
+            value={notes[selectedDate]?.priority || "none"}
+            onChange={handlePriorityChange}
+          >
+            <option value="none">No Priority</option>
+            <option value="low">Low</option>
+            <option value="medium">Medium</option>
+            <option value="high">High</option>
+          </select>
         </Sider>
         <Layout style={{ padding: "0 20px" }}>
           <Content style={{ background: "#fff", padding: "20px" }}>
