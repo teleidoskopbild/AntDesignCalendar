@@ -1,4 +1,4 @@
-import { Calendar, Layout, Badge } from "antd";
+import { Calendar, Layout, Badge, Card, Divider } from "antd";
 import { useState, useEffect } from "react";
 import { BellOutlined, SettingOutlined } from "@ant-design/icons";
 
@@ -110,28 +110,32 @@ const App = () => {
 
       <Layout>
         <Sider width={300} style={{ background: "#fff", padding: "20px" }}>
-          <h2>Details for {selectedDate}</h2>
-          <textarea
-            value={notes[selectedDate]?.text || ""}
-            onChange={handleContentChange}
-            placeholder="Enter your notes..."
-            style={{
-              width: "100%",
-              height: "200px",
-              border: "1px solid #ccc",
-              padding: "10px",
-              borderRadius: "4px",
-            }}
-          />
-          <select
-            value={notes[selectedDate]?.priority || "none"}
-            onChange={handlePriorityChange}
-          >
-            <option value="none">No Priority</option>
-            <option value="low">Low</option>
-            <option value="medium">Medium</option>
-            <option value="high">High</option>
-          </select>
+          <Card title={`Details for ${selectedDate || "..."}`} bordered={false}>
+            <textarea
+              value={notes[selectedDate]?.text || ""}
+              onChange={handleContentChange}
+              placeholder="Enter your notes..."
+              style={{
+                width: "100%",
+                height: "150px",
+                border: "1px solid #ccc",
+                padding: "10px",
+                borderRadius: "4px",
+              }}
+            />
+            <Divider />
+            <h4>Priority:</h4>
+            <select
+              value={notes[selectedDate]?.priority || "none"}
+              onChange={handlePriorityChange}
+              style={{ width: "100%", padding: "8px", borderRadius: "4px" }}
+            >
+              <option value="none">No Priority</option>
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </Card>
         </Sider>
         <Layout style={{ padding: "0 20px" }}>
           <Content style={{ background: "#fff", padding: "20px" }}>
